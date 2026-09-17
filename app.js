@@ -1,9 +1,9 @@
 const products = [
-  { id: 'mousse', name: 'Mousse de durazno', category: 'dulce', detail: 'Un postre suave para darle un toque dulce a tu día.', size: 'Tarrito · 500 ml', price: 160, badge: 'Un gustito fresco', image: 'photo-1488477181946-6428a0291777' },
-  { id: 'roll', name: 'Roll de canela', category: 'dulce', detail: 'Ese aroma a canela que invita a poner la pava.', size: 'Por unidad', price: 60, badge: 'La merienda perfecta', image: 'photo-1509365465985-25d11c17e812' },
-  { id: 'scones', name: 'Scones de queso', category: 'salado', detail: 'Un bocado salado para compartir entre mate y mate.', size: 'Pack de 6 unidades', price: 55, badge: 'Para compartir', image: 'photo-1549931319-a545dcf3bc73', variants: [{ id: 'scones6', size: '6 unidades', price: 55 }, { id: 'scones12', size: '12 unidades', price: 110 }] },
-  { id: 'chaja', name: 'Chajá en tarrito', category: 'dulce', detail: 'Un clásico que siempre encuentra su lugar en la mesa.', size: 'Tarrito · 500 ml', price: 160, badge: 'Un clásico querido', image: 'photo-1464305795204-6f5bbfc7fb81' },
-  { id: 'brownie', name: 'Brownie con nueces', category: 'dulce', detail: 'Chocolate y nueces: una combinación para disfrutar.', size: 'Tarrito · 500 ml', price: 160, badge: 'Para fans del chocolate', image: 'photo-1606313564200-e75d5e30476c' }
+  { id: 'mousse', name: 'Mousse de durazno', category: 'dulce', detail: 'Un postre suave para darle un toque dulce a tu día.', size: 'Tarrito · 500 ml', price: 160, badge: 'Un gustito fresco', image: './assets/mousse-durazno.webp' },
+  { id: 'roll', name: 'Roll de canela', category: 'dulce', detail: 'Ese aroma a canela que invita a poner la pava.', size: 'Por unidad', price: 60, badge: 'La merienda perfecta', image: './assets/roll-canela.jpg' },
+  { id: 'scones', name: 'Scones de queso', category: 'salado', detail: 'Un bocado salado para compartir entre mate y mate.', size: 'Pack de 6 unidades', price: 55, badge: 'Para compartir', image: './assets/scones-queso.webp', variants: [{ id: 'scones6', size: '6 unidades', price: 55 }, { id: 'scones12', size: '12 unidades', price: 110 }] },
+  { id: 'chaja', name: 'Chajá en tarrito', category: 'dulce', detail: 'Un clásico que siempre encuentra su lugar en la mesa.', size: 'Tarrito · 500 ml', price: 160, badge: 'Un clásico querido', image: './assets/chaja-tarrito.webp' },
+  { id: 'brownie', name: 'Brownie con nueces', category: 'dulce', detail: 'Chocolate y nueces: una combinación para disfrutar.', size: 'Tarrito · 500 ml', price: 160, badge: 'Para fans del chocolate', image: './assets/brownie-nueces.webp' }
 ];
 const cart = new Map();
 const dialog = document.querySelector('#cart-dialog');
@@ -23,9 +23,9 @@ function reveal() { document.querySelectorAll('.reveal:not(.shown)').forEach(el 
 function renderProducts(filter = 'all') {
   document.querySelector('#products').innerHTML = products.filter(p => filter === 'all' || p.category === filter).map(p => `
     <article class="product-card reveal" data-product="${p.id}">
-      <div class="product-image"><img src="https://images.unsplash.com/${p.image}?auto=format&fit=crop&w=650&q=80" alt="Imagen ilustrativa de ${p.name.toLowerCase()}" loading="lazy"><span class="product-badge">${p.badge}</span></div>
+      <div class="product-image"><img src="${p.image}" alt="Imagen ilustrativa de ${p.name.toLowerCase()}" loading="lazy"><span class="product-badge">${p.badge}</span></div>
       <div class="product-content"><p class="product-category">${p.category === 'dulce' ? 'Algo dulce' : 'Algo salado'} · ${p.variants ? 'Para compartir' : p.size}</p><h3>${p.name}</h3><p class="product-description">${p.detail}</p>
-      ${p.variants ? `<select class="variant-select" aria-label="Cantidad de scones">${p.variants.map(v => `<option value="${v.id}">${v.size} · ${money(v.price)}</option>`).join('')}</select>` : ''}
+      <div class="product-options">${p.variants ? `<select class="variant-select" aria-label="Cantidad de scones">${p.variants.map(v => `<option value="${v.id}">${v.size} · ${money(v.price)}</option>`).join('')}</select>` : ''}</div>
       <div class="product-bottom"><span class="price">${money(p.price)} <small>${p.id === 'roll' ? 'c/u' : p.variants ? '/ pack' : '/ tarrito'}</small></span><button class="add-button" data-add="${p.id}" aria-label="Agregar ${p.name} al pedido">Agregar <span>+</span></button></div></div>
     </article>`).join('');
   reveal();
